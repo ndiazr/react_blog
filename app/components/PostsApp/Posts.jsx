@@ -35,6 +35,7 @@ class Posts extends Component {
       },
       body: JSON.stringify(post.toJS()),
     });
+    this.handleCloseForm();
     // const postItem = (
     //   <Post
     //     key={this.state.postsCount}
@@ -52,8 +53,6 @@ class Posts extends Component {
   };
 
   handleEditPost = (post) => {
-    console.log("asjhdgajkhdsgj")
-    console.log("entra")
     const postItem = (
       <Post
         key={post.get('id')}
@@ -63,8 +62,6 @@ class Posts extends Component {
         deletePost={this.handleDeletePost}
       />
     );
-    console.log(postItem);
-    console.log(post.get('id'));
     const index = findIndex(
       p => p.key === `${post.get('id')}`
     )(this.state.posts)
@@ -73,9 +70,7 @@ class Posts extends Component {
       postItem,
       this.state.posts,
     );
-    console.log(posts);
     this.setState({ posts }, () => this.handleCloseForm());
-
   };
 
   handleEditPostForm = (id, post) => {
@@ -89,9 +84,12 @@ class Posts extends Component {
 
 
   handleDeletePost = (id) => {
-    const posts = this.state.posts
-      .filter(p => p.key !== `${id}`);
-    this.setState({ posts });
+    // const posts = this.state.posts
+    //   .filter(p => p.key !== `${id}`);
+    // this.setState({ posts });
+    fetch(`${endpoints.posts}/${id}`, {
+      method: 'DELETE',
+    });
   }
 
   handleShowForm = () => {
