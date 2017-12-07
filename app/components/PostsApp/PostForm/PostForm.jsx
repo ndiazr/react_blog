@@ -12,6 +12,7 @@ class PostForm extends Component {
   static propTypes = {
      post: ImmutablePropTypes.map,
      createPost: PropTypes.func.isRequired,
+     editPost: PropTypes.func.isRequired,
      active: PropTypes.bool.isRequired,
      closeForm: PropTypes.func.isRequired,
    };
@@ -55,12 +56,13 @@ class PostForm extends Component {
 
   handleEditPost = () => {
     const { editPost } = this.props;
+    const { postState } = this.state;
     console.log(this.state.postState);
     this.setState(
       {
           postState: PostForm.postState(),
       },
-      () => editPost(this.state.postState),
+      () => editPost(postState),
     );
   };
 

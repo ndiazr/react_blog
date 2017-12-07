@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-toolbox/lib/button';
-import { findIndex, set } from 'lodash/fp';
+import { findIndex, set, isNil } from 'lodash/fp';
 import { fromJS, List } from 'immutable';
 import Post from './Post/Post';
 import PostForm from './PostForm/PostForm';
@@ -39,7 +39,8 @@ class Posts extends Component {
   };
 
   handleEditPost = (post) => {
-    fetch(`${endpoints.posts}/${id}`, {
+    console.log(post);
+    fetch(`${endpoints.posts}/${post.get('id')}`, {
       method: 'PUT',
       headers: {
         Accept: "application/json",
@@ -48,24 +49,6 @@ class Posts extends Component {
       body: JSON.stringify(post.toJS()),
     });
     this.handleCloseForm();
-    // const postItem = (
-    //   <Post
-    //     key={post.get('id')}
-    //     id={post.get('id')}
-    //     post={post}
-    //     editPost={this.handleEditPostForm}
-    //     deletePost={this.handleDeletePost}
-    //   />
-    // );
-    // const index = findIndex(
-    //   p => p.key === `${post.get('id')}`
-    // )(this.state.posts)
-    // const posts = set(
-    //   index,
-    //   postItem,
-    //   this.state.posts,
-    // );
-    // this.setState({ posts }, () => this.handleCloseForm());
   };
 
   handleEditPostForm = (id, post) => {
@@ -79,9 +62,6 @@ class Posts extends Component {
 
 
   handleDeletePost = (id) => {
-    // const posts = this.state.posts
-    //   .filter(p => p.key !== `${id}`);
-    // this.setState({ posts });
     fetch(`${endpoints.posts}/${id}`, {
       method: 'DELETE',
     });
@@ -97,7 +77,8 @@ class Posts extends Component {
 
   render() {
 
-    const posts = this.state.posts.map(post => (
+    const posts = isNil(this.state.posts)  ? 
+    this.state.posts.map(post => (
       <Post
         key={post.get('_id')}
         id={post.get('_id')}
@@ -105,20 +86,12 @@ class Posts extends Component {
         editPost={this.handleEditPostForm}
         deletePost={this.handleDeletePost}
       />
-    )).toJS();
-
-    console.log(this.state.posts.size);
-
-    // const posts = this.state.posts.length > 0 ?
-    // (
-    //   this.state.posts
-    // ) :
-    // (
-    //   <div>
-    //     No hay posts
-    //   </div>
-    // );
-
+    )).toJS()
+    :
+    <div>
+        No hay posts
+    </div>
+    
     return (
       <div>
         {posts}
