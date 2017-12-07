@@ -36,41 +36,36 @@ class Posts extends Component {
       body: JSON.stringify(post.toJS()),
     });
     this.handleCloseForm();
+  };
+
+  handleEditPost = (post) => {
+    fetch(`${endpoints.posts}/${id}`, {
+      method: 'PUT',
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(post.toJS()),
+    });
+    this.handleCloseForm();
     // const postItem = (
     //   <Post
-    //     key={this.state.postsCount}
-    //     id={this.state.postsCount}
+    //     key={post.get('id')}
+    //     id={post.get('id')}
     //     post={post}
     //     editPost={this.handleEditPostForm}
     //     deletePost={this.handleDeletePost}
     //   />
     // );
-    // const posts = this.state.posts.concat(postItem);
-    // this.setState({
-    //   posts,
-    //   postsCount: this.state.postsCount + 1,
-    // }, () => this.handleCloseForm());
-  };
-
-  handleEditPost = (post) => {
-    const postItem = (
-      <Post
-        key={post.get('id')}
-        id={post.get('id')}
-        post={post}
-        editPost={this.handleEditPostForm}
-        deletePost={this.handleDeletePost}
-      />
-    );
-    const index = findIndex(
-      p => p.key === `${post.get('id')}`
-    )(this.state.posts)
-    const posts = set(
-      index,
-      postItem,
-      this.state.posts,
-    );
-    this.setState({ posts }, () => this.handleCloseForm());
+    // const index = findIndex(
+    //   p => p.key === `${post.get('id')}`
+    // )(this.state.posts)
+    // const posts = set(
+    //   index,
+    //   postItem,
+    //   this.state.posts,
+    // );
+    // this.setState({ posts }, () => this.handleCloseForm());
   };
 
   handleEditPostForm = (id, post) => {
