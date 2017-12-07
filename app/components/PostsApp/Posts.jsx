@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-toolbox/lib/button';
-import { findIndex, set, isNil } from 'lodash/fp';
+import { findIndex, set } from 'lodash/fp';
 import { fromJS, List } from 'immutable';
 import Post from './Post/Post';
 import PostForm from './PostForm/PostForm';
@@ -76,8 +76,7 @@ class Posts extends Component {
   };
 
   render() {
-
-    const posts = isNil(this.state.posts)  ? 
+    const posts = (this.state.posts.size) > 0  ? 
     this.state.posts.map(post => (
       <Post
         key={post.get('_id')}
@@ -89,8 +88,8 @@ class Posts extends Component {
     )).toJS()
     :
     <div>
-        No hay posts
-    </div>
+    No hay posts
+    </div>;
     
     return (
       <div>
