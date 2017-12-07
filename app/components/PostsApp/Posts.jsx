@@ -18,6 +18,7 @@ class Posts extends Component {
     this.getPosts();
   }
 
+
   async getPosts() {
     console.log(endpoints.posts);
     const response = await fetch(endpoints.posts);
