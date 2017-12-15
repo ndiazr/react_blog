@@ -46,21 +46,19 @@ class PostForm extends Component {
 
   handleCreatePost = () => {
     const { createPost } = this.props;
-    // const post = Object.assign({}, this.state, { date: Date() });
     const post = this.state.postState.set('date', Date());
-    // console.log(post);
     this.setState({ postState: PostForm.postState() }, () => createPost(post));
-    // createPost(post);
   };
 
   handleEditPost = () => {
     const { editPost } = this.props;
-    console.log(this.state.postState);
+    const { postState } = this.state;
+
     this.setState(
       {
           postState: PostForm.postState(),
       },
-      () => editPost(this.state.postState),
+      () => editPost(postState),
     );
   };
 

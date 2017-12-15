@@ -4,6 +4,8 @@ import Posts from './Posts';
 import {
   fetchPosts,
   createPost,
+  editPost,
+  deletePost,
 } from '../../actions';
 
 const mapStateToProps = (state) => ({
@@ -14,6 +16,8 @@ const mapDispatchToProps = (dispatch) => (
   bindActionCreators({
     fetchPosts,
     createPost,
+    editPost,
+    deletePost,
   }, dispatch)
 );
 
